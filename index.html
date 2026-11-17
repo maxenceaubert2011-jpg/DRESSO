@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DRESSO — Mon dressing</title>
+<meta name="application-name" content="DRESSO">
+<style>
+:root{--bg:#dce1e3;--card:#f0f2f2;--soft:#e6e9ea;--ink:#252b27;--muted:#707975;--line:#cbd2d4;--accent:#456b55;--tint:#dce6df;--shadow:0 10px 30px rgba(32,53,38,.09)}
+[data-theme=dark]{color-scheme:dark;--bg:#141a16;--card:#202923;--soft:#28332c;--ink:#edf3ed;--muted:#a1ada3;--line:#37443b;--accent:#a5c9ad;--tint:#304438;--shadow:0 10px 30px #0003}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Trebuchet MS",Arial,sans-serif;transition:.2s}button,input,select{font:inherit}button{cursor:pointer}
+header{height:76px;width:min(1120px,calc(100% - 32px));margin:12px auto 0;background:rgba(239,243,241,.30);border:1px solid rgba(255,255,255,.48);border-radius:22px;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1120px)/2));position:sticky;top:12px;z-index:3;isolation:isolate;overflow:hidden;box-shadow:0 12px 38px rgba(31,54,39,.08),inset 0 1px 0 rgba(255,255,255,.48),inset 0 -1px 0 rgba(255,255,255,.12);backdrop-filter:blur(30px) saturate(190%);-webkit-backdrop-filter:blur(30px) saturate(190%)}
+header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(112deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.075) 34%,rgba(255,255,255,.16) 62%,rgba(255,255,255,.035) 100%)}
+[data-theme=dark] header{background:rgba(28,38,31,.30);border-color:rgba(255,255,255,.18);box-shadow:0 12px 38px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(255,255,255,.035)}
+[data-theme=dark] header::before{background:linear-gradient(112deg,rgba(255,255,255,.085),rgba(255,255,255,.012) 45%,rgba(255,255,255,.035))}
+header>*{position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:44px;height:44px;border-radius:15px;background:linear-gradient(145deg,#a8d3b2,#4e8061);color:white;display:grid;place-items:center;box-shadow:0 5px 14px #416b5333}.logo svg{width:28px;height:28px}.brand b{font-size:20px;letter-spacing:.5px;font-weight:900}.brand small{display:block;color:var(--muted);font-size:12px}
+.actions{display:flex;gap:9px}.btn{border:0;border-radius:11px;padding:11px 15px;font-weight:750}.primary{background:var(--accent);color:white}.theme{width:42px;background:var(--soft);border:1px solid var(--line);color:var(--ink);font-size:18px;border-radius:11px}
+main{max-width:1120px;margin:30px auto;padding:0 20px}.intro{margin-bottom:22px}.intro small{color:var(--accent);font-weight:800;letter-spacing:1.5px;text-transform:uppercase}.intro h1{font-size:29px;letter-spacing:-.8px;margin:4px 0}.intro p{margin:0;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:22px}.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:var(--shadow)}.stat span{color:var(--muted);font-size:13px}.stat strong{display:block;font-size:29px;margin-top:4px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:17px}.search{flex:1;min-width:190px}.search input{width:100%}input,select{background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px;outline:none}input:focus,select:focus{border-color:var(--accent)}.filters{display:flex;gap:6px;flex-wrap:wrap}.filter{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:13px}.filter.active{background:var(--tint);color:var(--accent);border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.item{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);min-width:0}.photo{height:205px;background:var(--soft);display:grid;place-items:center;color:var(--muted);position:relative;font-size:13px}.photo img{width:100%;height:100%;object-fit:cover}.tag{position:absolute;top:10px;left:10px;padding:5px 9px;background:var(--card);border-radius:20px;font-size:10px;font-weight:850}.stock{color:#3d965f}.pending{color:#c28737}.sold{color:#c45e5e}.body{padding:12px}.body h3{margin:0 0 3px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:12px;color:var(--muted);min-height:18px}.itembuttons{display:flex;gap:6px;margin-top:11px}.mini{flex:1;background:var(--soft);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 5px;font-size:12px;font-weight:700}.mini.del{flex:0 0 34px;color:#c45e5e}.empty{grid-column:1/-1;text-align:center;padding:50px 15px;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}.empty b{display:block;color:var(--ink);font-size:17px}.empty p{margin:5px 0 14px}
+.overlay{position:fixed;inset:0;background:rgba(19,27,23,.34);backdrop-filter:blur(10px) saturate(125%);-webkit-backdrop-filter:blur(10px) saturate(125%);display:none;align-items:center;justify-content:center;padding:16px;z-index:5}.overlay.open{display:flex}.modal{position:relative;isolation:isolate;width:min(500px,100%);max-height:92vh;overflow:auto;background:rgba(255,255,255,.34);backdrop-filter:blur(34px) saturate(190%);-webkit-backdrop-filter:blur(34px) saturate(190%);border:1px solid rgba(255,255,255,.76);border-radius:24px;padding:22px;color:var(--ink);box-shadow:0 24px 70px rgba(19,35,25,.20),inset 0 1px 0 rgba(255,255,255,.84),inset 0 -1px 0 rgba(255,255,255,.26)}.modal::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.12) 38%,rgba(255,255,255,.025) 72%,rgba(255,255,255,.22) 100%)}.modal>*{position:relative;z-index:1}[data-theme=dark] .overlay{background:rgba(0,0,0,.43)}[data-theme=dark] .modal{background:rgba(29,39,32,.48);border-color:rgba(255,255,255,.23);box-shadow:0 24px 70px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(255,255,255,.05)}[data-theme=dark] .modal::before{background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.025) 45%,rgba(255,255,255,.07))}[data-theme=dark] .modal input,[data-theme=dark] .modal select{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.modal{background:rgba(255,255,255,.94)}[data-theme=dark] .modal{background:rgba(32,41,35,.96)}}.modalhead{display:flex;justify-content:space-between;align-items:center}.modal h2{margin:0;font-size:21px}.close{background:var(--soft);border:1px solid var(--line);color:var(--ink);border-radius:9px;width:34px;height:34px;font-size:20px}.field{margin:14px 0}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:6px}.field input,.field select{width:100%}.preview{width:100%;height:160px;object-fit:contain;background:var(--soft);border-radius:10px;margin-top:8px;display:none}.hint{color:var(--muted);font-size:11px;margin-top:4px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.secondary{background:var(--soft);color:var(--ink);border:1px solid var(--line)}footer{max-width:1120px;margin:18px auto 32px;padding:0 20px;color:var(--muted);font-size:12px}.toast{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--card);padding:11px 16px;border-radius:10px;z-index:9}.toast.show{display:block}
+/* Écran d'ouverture */
+.splash{position:fixed;inset:0;z-index:20;background:#17231c;display:grid;place-items:center;color:#f5fff6;transition:opacity .65s ease,visibility .65s ease}
+.splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.splash-inner{display:flex;align-items:center;gap:17px;animation:splashIn 1.15s cubic-bezier(.2,.8,.2,1) both}
+.splash-mark{width:76px;height:76px;border-radius:25px;background:linear-gradient(145deg,#b7dfbf,#5f9870);display:grid;place-items:center;box-shadow:0 14px 40px #0004;animation:markMove 1.5s cubic-bezier(.2,.8,.2,1) both}
+.splash-mark svg{width:47px;height:47px}
+.splash-name{font-size:clamp(38px,8vw,58px);font-weight:900;letter-spacing:2px;line-height:1}
+.splash-name span{display:inline-block;opacity:0;transform:translateY(20px) rotate(8deg);animation:letterIn .45s ease forwards}
+.splash-sub{color:#b8c8bb;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-top:9px;opacity:0;animation:fadeIn .5s ease 1s forwards}
+@keyframes splashIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+@keyframes markMove{0%{transform:rotate(-25deg) scale(.5)}55%{transform:rotate(12deg) scale(1.12)}100%{transform:rotate(0) scale(1)}}
+@keyframes letterIn{to{opacity:1;transform:translateY(0) rotate(0)}}
+@keyframes fadeIn{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.splash-inner,.splash-mark,.splash-name span,.splash-sub{animation:none;opacity:1;transform:none}.splash{transition:none}}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:620px){header{width:calc(100% - 20px);margin:10px auto 0;padding:0 12px;height:66px;border-radius:19px;top:10px}.brand small{display:none}.brand b{font-size:16px}.logo{width:37px;height:37px}.btn{padding:10px;font-size:13px}main{padding:0 12px;margin:22px auto}.intro h1{font-size:25px}.stats{grid-template-columns:repeat(2,1fr);gap:8px}.stat{padding:13px}.stat strong{font-size:25px}.panel{padding:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.photo{height:155px}.filters{width:100%}.filter{flex:1;padding:8px 4px;font-size:12px}}@media(max-width:370px){.photo{height:130px}.body{padding:9px}.itembuttons{gap:4px}.mini{font-size:10px}}
+
+/* Tableau de bord des ventes */
+.sales-dashboard{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(290px,1fr);gap:14px;margin-top:18px;align-items:stretch}
+.sales-card{min-width:0;padding:17px}
+.sales-head,.sales-title-row,.sales-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sales-head h2,.sales-list-head h2{font-size:16px;margin:0;font-weight:850;letter-spacing:-.2px}
+.sales-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.chart-ranges{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.chart-range{border:1px solid var(--line);background:var(--soft);color:var(--muted);border-radius:8px;padding:6px 8px;font-size:11px;font-weight:750}
+.chart-range.active{background:var(--tint);border-color:var(--accent);color:var(--accent)}
+.chart-preview{display:block;width:100%;margin:9px 0 0;padding:4px 0 0;border:0;background:transparent;color:inherit;text-align:initial;border-radius:12px;cursor:zoom-in}
+.chart-preview:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#salesChart{display:block;width:100%;height:190px}
+.chart-hint{text-align:center;color:var(--muted);font-size:11px;padding-top:5px}
+.chart-caption{font-size:11px;color:var(--muted);min-height:16px;margin-top:2px}
+.revenue-top{padding:3px 2px 16px}
+.revenue-top span{display:block;color:var(--muted);font-size:13px;font-weight:700}
+.revenue-top strong{display:block;font-size:32px;line-height:1.2;letter-spacing:-.8px;margin-top:5px;font-variant-numeric:tabular-nums}
+.revenue-top small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.sales-separator{height:1px;background:var(--line);margin:0 0 14px}
+.sales-list-head{margin-bottom:9px}
+.sales-count{color:var(--muted);font-size:11px;background:var(--soft);border:1px solid var(--line);padding:4px 8px;border-radius:20px}
+.sales-list{display:flex;flex-direction:column;gap:7px;max-height:218px;overflow:auto;padding-right:3px;scrollbar-width:thin}
+.sale-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 9px;border:1px solid var(--line);background:var(--soft);border-radius:10px;min-width:0}
+.sale-info{min-width:0}
+.sale-name{font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sale-date{font-size:10px;color:var(--muted);margin-top:1px}
+.sale-amount{flex:0 0 auto;color:var(--accent);font-size:13px;font-weight:900;font-variant-numeric:tabular-nums}
+.sales-empty{padding:20px 10px;text-align:center;color:var(--muted);font-size:12px;border:1px dashed var(--line);border-radius:10px}
+.delete-overlay{z-index:15;background:rgba(32,40,35,.30);backdrop-filter:blur(13px) saturate(135%);-webkit-backdrop-filter:blur(13px) saturate(135%)}
+.confirm-modal{width:min(390px,100%);padding:23px;border-radius:23px}
+.confirm-modal .confirm-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(196,94,94,.12);color:#c45e5e;font-size:21px;margin-bottom:14px}
+.confirm-modal p{color:var(--muted);font-size:13px;line-height:1.55;margin:8px 0 0;overflow-wrap:anywhere}
+.confirm-modal .modalfoot{margin-top:22px}
+.confirm-delete{background:#bd6262;color:white;border:1px solid rgba(255,255,255,.25)}
+[data-theme=dark] .delete-overlay{background:rgba(0,0,0,.48)}
+[data-theme=dark] .confirm-modal{background:rgba(29,39,32,.56);border-color:rgba(255,255,255,.22)}
+[data-theme=dark] .confirm-modal .confirm-icon{background:rgba(222,112,112,.15);color:#f08a8a}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.confirm-modal{background:rgba(239,242,240,.97)}[data-theme=dark] .confirm-modal{background:rgba(32,41,35,.97)}}
+.chart-overlay{position:fixed;inset:0;z-index:12;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(19,27,23,.40);backdrop-filter:blur(16px) saturate(135%);-webkit-backdrop-filter:blur(16px) saturate(135%)}
+.chart-overlay.open{display:flex}
+.chart-window{width:min(1000px,100%);max-height:94vh;overflow:auto;position:relative;isolation:isolate;padding:22px;border-radius:25px;background:rgba(246,250,247,.53);border:1px solid rgba(255,255,255,.72);backdrop-filter:blur(38px) saturate(190%);-webkit-backdrop-filter:blur(38px) saturate(190%);box-shadow:0 28px 85px rgba(11,29,17,.24),inset 0 1px 0 rgba(255,255,255,.8);color:var(--ink)}
+.chart-window::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.48),rgba(255,255,255,.08) 45%,rgba(255,255,255,.18))}
+.chart-window>*{position:relative;z-index:1}
+.chart-window-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.chart-window-head h2{margin:0;font-size:21px}
+.chart-window-head p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.chart-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:20px 0 8px}
+.chart-nav-group{display:flex;align-items:center;gap:7px}
+.chart-nav button{min-width:38px;height:36px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.38);color:var(--ink);font-weight:800}
+.chart-nav button:disabled{opacity:.35;cursor:not-allowed}
+.chart-period{font-size:12px;color:var(--muted);font-weight:750;min-width:155px;text-align:center}
+#salesChartLarge{display:block;width:100%;height:390px;touch-action:pan-y;cursor:crosshair}
+.chart-tooltip{min-height:22px;margin-top:4px;padding:8px 10px;background:rgba(255,255,255,.24);border:1px solid rgba(255,255,255,.42);border-radius:10px;color:var(--muted);font-size:12px}
+.chart-modal-hint{font-size:11px;color:var(--muted);margin:9px 2px 0}
+[data-theme=dark] .chart-window{background:rgba(28,39,32,.62);border-color:rgba(255,255,255,.2);box-shadow:0 28px 85px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.18)}
+[data-theme=dark] .chart-window::before{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.018) 48%,rgba(255,255,255,.06))}
+[data-theme=dark] .chart-nav button{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16)}
+[data-theme=dark] .chart-tooltip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+@media(max-width:760px){.sales-dashboard{grid-template-columns:1fr}.sales-card{padding:14px}.sales-list{max-height:240px}#salesChartLarge{height:300px}.chart-window{padding:16px;border-radius:20px}}
+@media(max-width:430px){.sales-head{align-items:flex-start;flex-direction:column}.chart-ranges{justify-content:flex-start}.revenue-top strong{font-size:29px}.chart-window-head h2{font-size:18px}.chart-period{min-width:125px;font-size:11px}}
+
+
+/* Survol discret : les cartes se soulèvent légèrement, sans modifier leur design. */
+@media (hover: hover) and (pointer: fine) {
+  .stat,
+  .panel,
+  .item,
+  .sales-card {
+    transition:
+      transform 240ms cubic-bezier(.2,.75,.25,1),
+      box-shadow 240ms cubic-bezier(.2,.75,.25,1);
+    transform: translate3d(0, 0, 0);
+  }
+  .stat:hover,
+  .panel:hover,
+  .item:hover,
+  .sales-card:hover {
+    transform: translate3d(0, -4px, 0);
+    box-shadow: 0 16px 34px rgba(8, 20, 16, .16);
+    z-index: 2;
+  }
+  .sale-row {
+    transition:
+      transform 200ms cubic-bezier(.2,.75,.25,1),
+      box-shadow 200ms cubic-bezier(.2,.75,.25,1);
+  }
+  .sale-row:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: 0 8px 18px rgba(8, 20, 16, .10);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stat, .panel, .item, .sales-card, .sale-row {
+    transition: none !important;
+  }
+}
+
+</style></head><body>
+<div class="splash" id="splash" aria-label="Ouverture de Dresso"><div class="splash-inner"><div class="splash-mark"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 8c-3.3 0-5.5 2.1-5.5 4.7 0 1.8 1.1 3.2 2.8 4L9 23.5c-1.7 1-1 3.5 1 3.5h28c2 0 2.7-2.5 1-3.5L26.7 16.7c1.7-.8 2.8-2.2 2.8-4C29.5 10.1 27.3 8 24 8Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="m13 31-2 9h26l-2-9" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="splash-name" id="splashName"></div><div class="splash-sub">Ton dressing, bien organisé</div></div></div></div>
+<header><div class="brand"><div class="logo"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 8c-3.3 0-5.5 2.1-5.5 4.7 0 1.8 1.1 3.2 2.8 4L9 23.5c-1.7 1-1 3.5 1 3.5h28c2 0 2.7-2.5 1-3.5L26.7 16.7c1.7-.8 2.8-2.2 2.8-4C29.5 10.1 27.3 8 24 8Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="m13 31-2 9h26l-2-9" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>DRESSO</b><small>Mon espace Vinted</small></div></div><div class="actions"><button class="theme" id="theme" title="Changer le thème">☾</button><button class="btn primary" id="new">＋ Nouvelle annonce</button></div></header>
+<main><section class="stats"><div class="stat"><span>Articles au total</span><strong id="total">0</strong></div><div class="stat"><span>En stock</span><strong id="stockCount">0</strong></div><div class="stat"><span>En attente</span><strong id="pendingCount">0</strong></div><div class="stat"><span>Vendus</span><strong id="soldCount">0</strong></div></section>
+<section class="panel"><div class="toolbar"><div class="search"><input id="search" placeholder="⌕  Rechercher un vêtement…"></div><div class="filters"><button class="filter active" data-filter="all">Tout</button><button class="filter" data-filter="stock">Stock</button><button class="filter" data-filter="pending">En attente</button><button class="filter" data-filter="sold">Vendu</button></div></div><section class="grid" id="items"></section></section>
+<section class="sales-dashboard" aria-label="Tableau de bord des ventes">
+  <section class="panel sales-card chart-card">
+    <div class="sales-head"><div><h2>Évolution des ventes</h2><div class="sales-sub">Chiffre des articles marqués comme vendus</div></div>
+      <div class="chart-ranges" aria-label="Période du graphique"><button class="chart-range" data-chart-range="1">1 j</button><button class="chart-range" data-chart-range="7">7 j</button><button class="chart-range" data-chart-range="30">30 j</button><button class="chart-range" data-chart-range="90">90 j</button><button class="chart-range active" data-chart-range="all">Tout</button></div>
+    </div>
+    <button class="chart-preview" id="chartPreview" type="button" aria-label="Agrandir le graphique et explorer les ventes"><canvas id="salesChart"></canvas><div class="chart-hint">Cliquer pour agrandir et explorer le graphique ↗</div></button>
+    <div class="chart-caption" id="chartCaption">Aucune vente enregistrée pour le moment.</div>
+  </section>
+  <section class="panel sales-card revenue-card">
+    <div class="revenue-top"><span>Total vendu</span><strong id="revenueTotal">0,00 €</strong><small id="revenueSub">0 vente enregistrée</small></div>
+    <div class="sales-separator"></div>
+    <div class="sales-list-head"><h2>Toutes les ventes</h2><span class="sales-count" id="salesCount">0</span></div>
+    <div class="sales-list" id="salesList"><div class="sales-empty">Tes ventes apparaîtront ici quand tu marqueras un article comme vendu.</div></div>
+  </section>
+</section></main>
+<footer>💾 Tes articles sont sauvegardés automatiquement dans ce navigateur, sur cet appareil.</footer>
+<div class="overlay" id="overlay"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Nouvelle annonce</h2><button class="close" id="close" type="button">×</button></div>
+<form id="form"><div class="field"><label for="name">Nom du vêtement *</label><input id="name" required maxlength="90" placeholder="Ex. Sweat Nike gris"></div><div class="field"><label for="status">Statut</label><select id="status"><option value="stock">En stock</option><option value="pending">En attente</option><option value="sold">Vendu</option></select></div><div class="field"><label for="size">Taille</label><input id="size" maxlength="30" placeholder="Ex. S, M, L, 38"></div><div class="field"><label for="brandName">Marque</label><input id="brandName" maxlength="50" placeholder="Ex. Nike, Zara, Adidas"></div><div class="field"><label for="price">Prix (€)</label><input id="price" type="number" min="0" step="0.01" placeholder="Ex. 15,00"></div><div class="field"><label for="photo">Photo de l'article</label><input id="photo" type="file" accept="image/*"><div class="hint">Image de 8 Mo maximum.</div><img id="preview" class="preview" alt="Aperçu"></div><div class="modalfoot"><button class="btn secondary" id="cancel" type="button">Annuler</button><button class="btn primary" type="submit">Enregistrer l'article</button></div></form></div></div>
+<div class="overlay delete-overlay" id="deleteOverlay" aria-hidden="true"><div class="modal confirm-modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteMessage"><div class="confirm-icon" aria-hidden="true">⌫</div><h2 id="deleteTitle">Supprimer cette annonce ?</h2><p id="deleteMessage">Cette action est définitive.</p><div class="modalfoot"><button class="btn secondary" id="deleteCancel" type="button">Annuler</button><button class="btn confirm-delete" id="deleteConfirm" type="button">Supprimer</button></div></div></div>
+<div class="chart-overlay" id="chartOverlay" aria-hidden="true"><div class="chart-window" role="dialog" aria-modal="true" aria-labelledby="chartModalTitle">
+  <div class="chart-window-head"><div><h2 id="chartModalTitle">Graphique des ventes</h2><p>Explore les montants encaissés au fil du temps.</p></div><button class="close" id="chartClose" type="button" aria-label="Fermer">×</button></div>
+  <div class="chart-nav"><div class="chart-ranges"><button class="chart-range" data-chart-range="1">1 jour</button><button class="chart-range" data-chart-range="7">7 jours</button><button class="chart-range" data-chart-range="30">30 jours</button><button class="chart-range" data-chart-range="90">90 jours</button><button class="chart-range active" data-chart-range="all">Tout</button></div>
+    <div class="chart-nav-group"><button id="chartPrev" type="button" aria-label="Période précédente">←</button><span class="chart-period" id="chartPeriod">Toutes les ventes</span><button id="chartNext" type="button" aria-label="Période suivante">→</button></div></div>
+  <canvas id="salesChartLarge"></canvas><div class="chart-tooltip" id="chartTooltip">Clique sur un point du graphique pour voir le détail de cette période.</div>
+  <p class="chart-modal-hint">Utilise les périodes et les flèches pour parcourir l’historique. Les ventes sans date connue restent incluses dans le total général.</p>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),KEY='closet-vinted-items-v3',THEME='closet-vinted-theme';let items=[],editing=null,photoData='',deleteTargetId=null;
+try{items=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(items))items=[]}catch{items=[]}
+const labels={stock:'EN STOCK',pending:'EN ATTENTE',sold:'VENDU'};
+function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(items));return true}catch{toast('Stockage plein : essaie une photo plus petite.');return false}}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){ $('total').textContent=items.length;$('stockCount').textContent=items.filter(x=>x.status==='stock').length;$('pendingCount').textContent=items.filter(x=>x.status==='pending').length;$('soldCount').textContent=items.filter(x=>x.status==='sold').length;
+let f=document.querySelector('.filter.active')?.dataset.filter||'all',q=$('search').value.trim().toLowerCase(),list=items.filter(x=>(f==='all'||x.status===f)&&(x.name+' '+(x.brand||'')+' '+(x.size||'')+' '+(x.price??'')+' '+(x.details||'')).toLowerCase().includes(q));
+$('items').innerHTML=list.length?list.map(x=>`<article class="item"><div class="photo">${x.photo?`<img src="${x.photo}" alt="${esc(x.name)}">`:'Photo à ajouter'}<span class="tag ${x.status}">${labels[x.status]}</span></div><div class="body"><h3>${esc(x.name)}</h3><div class="meta">${[x.size?'Taille '+esc(x.size):'',x.brand?esc(x.brand):'',x.price!==undefined&&x.price!==''?esc(String(x.price).replace('.',','))+' €':'',!x.size&&!x.brand&&(x.details||'')?esc(x.details):''].filter(Boolean).join(' · ')||'Aucun détail'}</div><div class="itembuttons"><button class="mini" data-edit="${x.id}">Modifier</button><button class="mini" data-next="${x.id}">${x.status==='stock'?'Attente':x.status==='pending'?'Vendu':'Remettre en stock'}</button><button class="mini del" data-del="${x.id}" title="Supprimer">×</button></div></div></article>`).join(''):`<div class="empty"><div style="font-size:32px">👕</div><b>${items.length?'Aucun résultat':'Ton dressing commence ici'}</b><p>${items.length?'Essaie une autre recherche ou un autre filtre.':'Ajoute ton premier vêtement pour commencer.'}</p>${items.length?'':'<button class="btn primary" id="emptyNew">＋ Nouvelle annonce</button>'}</div>`;
+renderSales()}
+function open(item=null){editing=item?item.id:null;photoData=item?.photo||'';$('modalTitle').textContent=item?'Modifier le vêtement':'Nouvelle annonce';$('name').value=item?.name||'';$('status').value=item?.status||'stock';$('size').value=item?.size||'';$('brandName').value=item?.brand||'';$('price').value=item?.price??'';$('photo').value='';$('preview').src=photoData;$('preview').style.display=photoData?'block':'none';$('overlay').classList.add('open');setTimeout(()=>$('name').focus(),30)}
+function close(){$('overlay').classList.remove('open')}
+$('new').onclick=()=>open();$('close').onclick=close;$('cancel').onclick=close;$('overlay').onclick=e=>{if(e.target===$('overlay'))close()};document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();closeChart();closeDelete()}});
+function askDelete(item){deleteTargetId=item.id;$('deleteMessage').textContent='Veux-tu vraiment supprimer « '+item.name+' » ? Cette action est définitive.';$('deleteOverlay').classList.add('open');$('deleteOverlay').setAttribute('aria-hidden','false');$('deleteCancel').focus()}
+function closeDelete(){deleteTargetId=null;$('deleteOverlay').classList.remove('open');$('deleteOverlay').setAttribute('aria-hidden','true')}
+$('deleteCancel').onclick=closeDelete;
+$('deleteOverlay').onclick=e=>{if(e.target===$('deleteOverlay'))closeDelete()};
+$('deleteConfirm').onclick=()=>{if(deleteTargetId===null)return;const id=deleteTargetId,previousItems=items;items=items.filter(x=>x.id!==id);if(save()){closeDelete();render();toast('Article supprimé.')}else{items=previousItems;closeDelete()}};
+$('items').onclick=e=>{if(e.target.id==='emptyNew'){open();return}let b=e.target.closest('button');if(!b)return;let id=Number(b.dataset.edit||b.dataset.next||b.dataset.del),it=items.find(x=>x.id===id);if(!it)return;if(b.dataset.edit!==undefined)open(it);else if(b.dataset.next!==undefined){const previous=it.status,next=previous==='stock'?'pending':previous==='pending'?'sold':'stock';if(next==='sold'){it.soldAt=new Date().toISOString();it.soldPrice=readPrice(it.price)}else if(previous==='sold'){it.soldAt=null;it.soldPrice=null}it.status=next;if(save()){render();toast('Statut modifié.')}}else if(b.dataset.del!==undefined){askDelete(it)}};
+async function compressPhoto(file){
+  const original=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Lecture impossible'));reader.readAsDataURL(file)});
+  const image=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('Image invalide'));img.src=original});
+  const scale=Math.min(1,1280/Math.max(image.naturalWidth,image.naturalHeight));
+  const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
+  const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas indisponible');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(image,0,0,canvas.width,canvas.height);
+  return canvas.toDataURL('image/jpeg',.78);
+}
+$('photo').onchange=async e=>{
+  const file=e.target.files[0];if(!file)return;
+  if(!file.type.startsWith('image/')){toast('Choisis une image.');e.target.value='';return}
+  if(file.size>12*1024*1024){toast('Photo trop lourde (12 Mo maximum).');e.target.value='';return}
+  try{photoData=await compressPhoto(file);$('preview').src=photoData;$('preview').style.display='block';toast('Photo ajoutée et optimisée.')}
+  catch{toast('Impossible de lire cette photo.');e.target.value=''}
+};
+$('form').onsubmit=e=>{e.preventDefault();let name=$('name').value.trim();if(!name){toast('Indique le nom du vêtement.');return}let data={name,status:$('status').value,size:$('size').value.trim(),brand:$('brandName').value.trim(),price:$('price').value.trim(),photo:photoData};if(editing!==null){let i=items.findIndex(x=>x.id===editing);if(i>=0){const previous=items[i];const saleAt=data.status!=='sold'?null:(previous.status==='sold'?(previous.soldAt??null):new Date().toISOString());items[i]={...previous,...data,soldAt:saleAt,soldPrice:data.status==='sold'?readPrice(data.price):null}}}else{const saleNow=data.status==='sold';items.unshift({id:Date.now(),...data,soldAt:saleNow?new Date().toISOString():null,soldPrice:saleNow?readPrice(data.price):null})}if(save()){close();render();toast(editing!==null?'Article modifié !':'Nouvel article ajouté !')}};
+function readPrice(value){const n=Number(String(value??'').replace(',','.'));return Number.isFinite(n)&&n>=0?n:0}
+const money=n=>new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
+const dateLabel=value=>value?new Intl.DateTimeFormat('fr-FR',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(value)):'Date non renseignée';
+function getSales(){return items.filter(x=>x.status==='sold').map(x=>({id:x.id,name:x.name||'Article vendu',date:x.soldAt||null,amount:x.soldPrice!==undefined&&x.soldPrice!==null?readPrice(x.soldPrice):readPrice(x.price)}))}
+let chartRange='all',chartEnd=new Date();chartEnd.setHours(0,0,0,0);
+const dayStart=d=>{const n=new Date(d);n.setHours(0,0,0,0);return n};
+const dayKey=d=>{const n=dayStart(d);return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`};
+const monthKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+const niceDay=d=>new Intl.DateTimeFormat('fr-FR',{day:'2-digit',month:'short'}).format(d);
+const niceMonth=d=>new Intl.DateTimeFormat('fr-FR',{month:'short',year:'2-digit'}).format(d);
+function buildSeries(){
+  const sales=getSales(),dated=sales.filter(x=>x.date&&Number.isFinite(new Date(x.date).getTime())),unknown=sales.filter(x=>!x.date);
+  const sums=new Map(),counts=new Map();
+  const put=(key,amount)=>{sums.set(key,(sums.get(key)||0)+amount);counts.set(key,(counts.get(key)||0)+1)};
+  dated.forEach(x=>put(dayKey(new Date(x.date)),x.amount));
+  let series=[];
+  if(chartRange==='all'){
+    const unknownTotal=unknown.reduce((a,x)=>a+x.amount,0);
+    if(unknown.length)series.push({key:'unknown',label:'Sans date',fullLabel:'Anciennes ventes — date non renseignée',amount:unknownTotal,count:unknown.length});
+    if(dated.length){
+      const dates=dated.map(x=>dayStart(new Date(x.date))).sort((a,b)=>a-b),first=dates[0],last=dates[dates.length-1];
+      const days=Math.round((last-first)/86400000),monthly=days>150;
+      if(monthly){
+        let cursor=new Date(first.getFullYear(),first.getMonth(),1),end=new Date(last.getFullYear(),last.getMonth(),1);
+        while(cursor<=end){const key=monthKey(cursor);series.push({key,label:niceMonth(cursor),fullLabel:new Intl.DateTimeFormat('fr-FR',{month:'long',year:'numeric'}).format(cursor),amount:sums.get(key)||0,count:counts.get(key)||0});cursor.setMonth(cursor.getMonth()+1)}
+      }else{
+        for(let cursor=new Date(first);cursor<=last;cursor.setDate(cursor.getDate()+1)){const key=dayKey(cursor);series.push({key,label:niceDay(cursor),fullLabel:new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(cursor),amount:sums.get(key)||0,count:counts.get(key)||0})}
+      }
+      if(monthly){
+        // Replace daily buckets with month totals for long histories.
+        const monthTotals=new Map(),monthCounts=new Map();
+        dated.forEach(x=>{const d=new Date(x.date),k=monthKey(d);monthTotals.set(k,(monthTotals.get(k)||0)+x.amount);monthCounts.set(k,(monthCounts.get(k)||0)+1)});
+        series=series.map(p=>({...p,amount:monthTotals.get(p.key)||0,count:monthCounts.get(p.key)||0}));
+      }
+    }
+  }else{
+    const span=Number(chartRange),end=dayStart(chartEnd),start=new Date(end);start.setDate(start.getDate()-(span-1));
+    for(let cursor=new Date(start);cursor<=end;cursor.setDate(cursor.getDate()+1)){const key=dayKey(cursor);series.push({key,label:niceDay(cursor),fullLabel:new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(cursor),amount:sums.get(key)||0,count:counts.get(key)||0})}
+  }
+  return {series,sales,unknownCount:unknown.length,datedCount:dated.length};
+}
+function drawSalesCanvas(canvasId){
+  const canvas=$(canvasId);if(!canvas)return;
+  const box=canvas.getBoundingClientRect(),width=Math.max(280,Math.floor(box.width||480)),height=canvasId==='salesChartLarge'?390:190,dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.floor(width*dpr);canvas.height=Math.floor(height*dpr);canvas.style.height=height+'px';
+  const ctx=canvas.getContext('2d');if(!ctx)return;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
+  const {series}=buildSeries(),left=44,right=12,top=14,bottom=31,plotW=width-left-right,plotH=height-top-bottom;
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#416b53',muted=getComputedStyle(document.documentElement).getPropertyValue('--muted').trim()||'#788078',line=getComputedStyle(document.documentElement).getPropertyValue('--line').trim()||'#dce2e6';
+  const maximum=Math.max(1,...series.map(x=>x.amount)),niceMax=maximum<=10?Math.ceil(maximum):Math.ceil(maximum/5)*5;
+  ctx.font='10px Trebuchet MS,Arial,sans-serif';ctx.textAlign='right';ctx.textBaseline='middle';
+  for(let i=0;i<=4;i++){const y=top+plotH-(plotH*i/4);ctx.strokeStyle=line;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(width-right,y);ctx.stroke();ctx.fillStyle=muted;ctx.fillText(money(niceMax*i/4),left-7,y)}
+  const points=series.map((p,i)=>({x:series.length===1?left+plotW/2:left+i*plotW/(series.length-1),y:top+plotH-(p.amount/niceMax)*plotH,...p,index:i}));
+  if(points.length){
+    if(points.length>1){const grad=ctx.createLinearGradient(0,top,0,top+plotH);grad.addColorStop(0,accent+'33');grad.addColorStop(1,accent+'00');ctx.beginPath();ctx.moveTo(points[0].x,top+plotH);points.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(points[points.length-1].x,top+plotH);ctx.closePath();ctx.fillStyle=grad;ctx.fill();ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle=accent;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';ctx.stroke()}
+    points.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,canvasId==='salesChartLarge'?4:3,0,Math.PI*2);ctx.fillStyle=accent;ctx.fill();ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--card').trim()||'#fff';ctx.lineWidth=1.5;ctx.stroke()});
+  }
+  ctx.fillStyle=muted;ctx.textAlign='center';ctx.textBaseline='top';
+  if(points.length){const maxTicks=Math.min(5,points.length),seen=new Set();for(let j=0;j<maxTicks;j++){const index=maxTicks===1?0:Math.round(j*(points.length-1)/(maxTicks-1)),p=points[index];if(!seen.has(index)){ctx.fillText(p.label,p.x,height-bottom+9);seen.add(index)}}}
+  canvas._chartPoints=points;canvas._chartPlot={left,right,top,bottom,width,height};
+}
+function renderChartControls(){document.querySelectorAll('[data-chart-range]').forEach(b=>b.classList.toggle('active',b.dataset.chartRange===chartRange));const prev=$('chartPrev'),next=$('chartNext');if(prev&&next){prev.disabled=chartRange==='all';const today=dayStart(new Date());next.disabled=chartRange==='all'||chartEnd>=today;}$('chartPeriod').textContent=chartRange==='all'?'Toutes les ventes':Number(chartRange)===1?dateLabel(chartEnd):`${dateLabel(new Date(chartEnd.getTime()-(Number(chartRange)-1)*86400000))} – ${dateLabel(chartEnd)}`}
+function drawSalesCharts(){drawSalesCanvas('salesChart');if($('chartOverlay').classList.contains('open'))drawSalesCanvas('salesChartLarge');renderChartControls()}
+function renderSales(){
+  const sales=getSales(),total=sales.reduce((a,x)=>a+x.amount,0);$('revenueTotal').textContent=money(total)+' €';$('revenueSub').textContent=`${sales.length} vente${sales.length>1?'s':''} enregistrée${sales.length>1?'s':''}`;$('salesCount').textContent=sales.length;
+  const ordered=[...sales].sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return -1;return new Date(b.date)-new Date(a.date)});
+  $('salesList').innerHTML=ordered.length?ordered.map(x=>`<div class="sale-row"><div class="sale-info"><div class="sale-name">${esc(x.name)}</div><div class="sale-date">${esc(dateLabel(x.date))}</div></div><div class="sale-amount">+${money(x.amount)} €</div></div>`).join(''):'<div class="sales-empty">Tes ventes apparaîtront ici quand tu marqueras un article comme vendu.</div>';
+  const known= sales.filter(x=>x.date).length,unknown=sales.length-known;
+  $('chartCaption').textContent=sales.length?`${sales.length} vente${sales.length>1?'s':''} au total · ${unknown?`${unknown} sans date connue · `:''}${known} datée${known>1?'s':''}`:'Aucune vente enregistrée pour le moment.';
+  drawSalesCharts();
+}
+function selectChartRange(range){chartRange=range;chartEnd=dayStart(new Date());drawSalesCharts()}
+function moveChart(direction){if(chartRange==='all')return;const end=dayStart(chartEnd);end.setDate(end.getDate()+direction*Number(chartRange));const today=dayStart(new Date());chartEnd=end>today?today:end;drawSalesCharts()}
+function openChart(){ $('chartOverlay').classList.add('open');$('chartOverlay').setAttribute('aria-hidden','false');drawSalesCanvas('salesChartLarge');renderChartControls()}
+function closeChart(){ $('chartOverlay').classList.remove('open');$('chartOverlay').setAttribute('aria-hidden','true') }
+$('chartPreview').onclick=openChart;$('chartClose').onclick=closeChart;$('chartOverlay').onclick=e=>{if(e.target===$('chartOverlay'))closeChart()};$('chartPrev').onclick=()=>moveChart(-1);$('chartNext').onclick=()=>moveChart(1);
+document.querySelectorAll('[data-chart-range]').forEach(b=>b.addEventListener('click',()=>selectChartRange(b.dataset.chartRange)));
+function chartPointAt(canvas,event){const points=canvas._chartPoints||[],rect=canvas.getBoundingClientRect();if(!points.length)return null;const plot=canvas._chartPlot||{left:0,width:rect.width};const x=plot.left+(event.clientX-rect.left)*(plot.width/rect.width);let closest=points[0];for(const p of points)if(Math.abs(p.x-x)<Math.abs(closest.x-x))closest=p;return closest}
+$('salesChartLarge').addEventListener('pointermove',e=>{const p=chartPointAt(e.currentTarget,e);if(p)$('chartTooltip').textContent=`${p.fullLabel} · ${p.count} vente${p.count>1?'s':''} · ${money(p.amount)} €`});
+$('salesChartLarge').addEventListener('click',e=>{const p=chartPointAt(e.currentTarget,e);if(p)$('chartTooltip').textContent=`${p.fullLabel} · ${p.count} vente${p.count>1?'s':''} · ${money(p.amount)} €`});
+window.addEventListener('resize',()=>{drawSalesCanvas('salesChart');if($('chartOverlay').classList.contains('open'))drawSalesCanvas('salesChartLarge')});
+document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render()});$('search').oninput=render;
+function setTheme(t){document.documentElement.dataset.theme=t;$('theme').textContent=t==='dark'?'☀':'☾';$('theme').title=t==='dark'?'Passer en mode clair':'Passer en mode sombre';try{localStorage.setItem(THEME,t)}catch{}}
+let t='light';try{t=localStorage.getItem(THEME)||'light'}catch{}setTheme(t);$('theme').onclick=()=>{let n=document.documentElement.dataset.theme==='dark'?'light':'dark';setTheme(n);drawSalesCharts();toast(n==='dark'?'Mode sombre activé':'Mode clair activé')};
+render();
+const splash=$('splash'),word='DRESSO';$('splashName').innerHTML=[...word].map((c,i)=>`<span style="animation-delay:${.38+i*.09}s">${c}</span>`).join('');setTimeout(()=>splash.classList.add('hide'),2100);setTimeout(()=>splash.remove(),2800);
+})();
+</script></body></html>
